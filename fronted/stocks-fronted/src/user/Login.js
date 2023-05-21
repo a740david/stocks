@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
-
+import {  Link } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
-import { Button } from '@mui/material';
+import {Grid,Stack, Button, Paper, Avatar } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Search from  '../stock/Search';
+
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [accessToken, setAccessToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
+
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem('access_token');
@@ -40,6 +45,7 @@ function Login() {
       setAccessToken(access);
       setRefreshToken(refresh);
       // Redirect to the home page or dashboard here
+      axios.defaults.headers.common['Authorization'] = `Bearer ${access}`;
     } catch (error) {
       console.error(error);
       // Handle login error here
@@ -53,10 +59,11 @@ function Login() {
     setAccessToken('');
     setRefreshToken('');
     // Redirect to the login page here
+    delete axios.defaults.headers.common['Authorization'];
   };
 
   const isLoggedIn = () => {
-    return accessToken !== '';
+    return accessToken !== '' && accessToken !== null;
   };
 
   useEffect(() => {
@@ -90,46 +97,112 @@ function Login() {
     });
   }, [accessToken]);
 
+  // style
+  const paperStyle={padding:20,height:'70vh',width:300,margin:'20px auto'}
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#FFEB3B', // Yellow color
+      },
+    },
+  });
+  
+  const themeA = createTheme({
+    components: {
+      MuiAvatar: {
+        styleOverrides: {
+          colorDefault: {
+            backgroundColor: '#FFEB3B', // Yellow color
+          },
+        },
+      },
+    },
+  });
   return (
     <div>
       {isLoggedIn() ? (
         <div>
-          <p>You are logged in as {userData.username}!</p>
-          <button onClick={handleLogout}>Logout</button>
+          <Search onLogout={handleLogout} /> 
         </div>
       ) : (
-        
+        <Grid>
+        <Paper elevation={10} style={paperStyle}>
+        <Grid align='center'>
+        <ThemeProvider theme={themeA}>
+        <Avatar >
+            <LockOutlinedIcon />
+          </Avatar>
+          </ThemeProvider>
+        <h2>Login</h2>
+        </Grid>
+        <Stack  direction="row" justifyContent="center">
         <form  onSubmit={handleLogin}>
-          <label>
-            <TextField 
+           <TextField 
               variant="outlined"
               margin="normal"
+              fullWidth
               required
               id="username"
               label="Username"
               name="username"
-              autoFocus value={username} onChange={handleUsernameChange} />
-          </label>
+              autoFocus value={username} 
+              onChange={handleUsernameChange} 
+              sx={{
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderColor: 'yellow',
+              },
+              '&:hover fieldset': {
+                borderColor: 'yellow',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: 'yellow',
+              },
+            },
+        }}
+              />
+         
           <br/>
-          <label>
             <TextField 
               variant="outlined"
               margin="normal"
+              fullWidth
               required
               name="password"
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"  value={password} onChange={handlePasswordChange} />
-          </label>
+              autoComplete="current-password"  value={password} onChange={handlePasswordChange} 
+              sx={{
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderColor: 'yellow',
+              },
+              '&:hover fieldset': {
+                borderColor: 'yellow',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: 'yellow',
+              },
+            },
+        }}
+              />
+         
           <br/>
-          <Button  type="submit"
+          <ThemeProvider theme={theme}>
+          <Button fullWidth type="submit"
               variant="contained"
               color="primary" >Login</Button>
+           </ThemeProvider>Don't have an account?  <Link to="/signup">signup</Link>
+          
         </form>
+        </Stack>
+        </Paper>
+        </Grid>
+
       )}
     </div>
   );
 }
 
-export default Login;
+export default Login;     

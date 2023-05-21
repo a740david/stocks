@@ -1,17 +1,13 @@
 from rest_framework import serializers
-
-from stocks_app.models import Stock
-
+from stocks_app.models import  FavoriteStocks
 
 
-class ReviewSerializer(serializers.ModelSerializer):
 
+class FavoriteStocksSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Stock
+        model = FavoriteStocks
         fields = '__all__'
-
-
-class CreateReviewSerializer(serializers.ModelSerializer):
+class CreateFavoriteStocksSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Stock
+        model = FavoriteStocks
         exclude = ['user']

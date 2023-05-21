@@ -2,18 +2,16 @@
 import './App.css';
 // import Singup from './user/Singup'
 import Login from './user/Login';
-import { Route,Routes } from "react-router-dom";
-import Main from './user/Main_user';
+import { BrowserRouter, Route,Routes } from "react-router-dom";
 import SignupForm from './user/Singup';
 function App() {
   return (  
+    <BrowserRouter>
      <Routes>
-        <Route path="/" element={<Main />}>
-        <Route index element={<Login/>} /> 
-        </Route>   
-          <Route path="singup/" element={<SignupForm/>}>    
-        </Route>
+        <Route path="/" element={<Login/>}></Route>
+        <Route path='/signup' element={<SignupForm/>} ></Route> 
       </Routes>
+      </BrowserRouter>
   );
 }
 

@@ -15,10 +15,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from stocks_app import views
+
 from django.urls import path, include
 
+from stocks_app.views.favorite_stocks import toggle_favorite_stock
+from stocks_app.views.reports import  ReportsView
+
+from stocks_app.views.stock_functions import get_stock
 urlpatterns = [
     path('api/auth/', include('stocks_app.urls.auth')),
     path('api/stocks/', include('stocks_app.urls.stocks')),
-    # path('api/favorite_stocks/', include('stocks_app.urls.favorite_stocks')),
+    path('api/favorite-stocks/<str:symbol>/', toggle_favorite_stock, name='toggle_favorite_stock'),
+    path('api/stock/<str:symbol>/', get_stock ,name='get_stock'),
+    path('api/reports/<str:symbol>/', ReportsView.as_view(), name='reports'),
+
 ]

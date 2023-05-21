@@ -7,7 +7,7 @@ class SignupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'first_name', 'last_name', 'is_staff')
+        fields = ('email', 'password', 'first_name', 'last_name')
 
     email = serializers.EmailField(
         write_only=True,
@@ -23,8 +23,7 @@ class SignupSerializer(serializers.ModelSerializer):
             username=validated_data['email'],
             email=validated_data['email'],
             first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            is_staff=validated_data['is_staff']
+            last_name=validated_data['last_name']
         )
 
         user.set_password(validated_data['password'])
@@ -36,4 +35,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'is_staff')
+        fields = ('email', 'first_name', 'last_name')

@@ -16,12 +16,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
+from stocks_app.views.favorite_stocks import FavoriteStocksViewSet
 from stocks_app.views.stocks import StocksViewSet
 
 router = DefaultRouter()
-router.register('', StocksViewSet)
+router.register('', FavoriteStocksViewSet)
 
-urlpatterns = []
+urlpatterns = [
+]
 
 # adding reviews urls to urlpatterns
 urlpatterns.extend(router.urls)
