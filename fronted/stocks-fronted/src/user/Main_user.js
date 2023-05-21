@@ -1,6 +1,6 @@
 
 import {  NavLink, Outlet, useLocation } from "react-router-dom";
-import { AppBar, MenuItem, Toolbar } from "@mui/material";
+import { Stack, MenuItem, Toolbar } from "@mui/material";
 import { Box } from "@mui/system";
 
 export default function Main(){
@@ -11,7 +11,8 @@ export default function Main(){
    
     
     return (
-        <Box>    
+        <Box>   
+          <Stack  direction="row" justifyContent="center">
                 <Toolbar variant="dense">             
                 <MenuItem>
                     <NavLink to='singup/'
@@ -21,7 +22,8 @@ export default function Main(){
                     </NavLink>
                 </MenuItem>      
                 </Toolbar>
-          
+                
+                </Stack>
 
             <Outlet />
         </Box>

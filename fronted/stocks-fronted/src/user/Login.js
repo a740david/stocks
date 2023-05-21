@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
-import { Button } from '@mui/material';
+import {Stack, Button } from '@mui/material';
+import LogoutButton from './LogoutButton';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -95,12 +96,12 @@ function Login() {
       {isLoggedIn() ? (
         <div>
           <p>You are logged in as {userData.username}!</p>
-          <button onClick={handleLogout}>Logout</button>
+          <LogoutButton onLogout={handleLogout} /> 
         </div>
       ) : (
-        
+        <Stack  direction="row" justifyContent="center">
         <form  onSubmit={handleLogin}>
-          <label>
+        
             <TextField 
               variant="outlined"
               margin="normal"
@@ -109,9 +110,8 @@ function Login() {
               label="Username"
               name="username"
               autoFocus value={username} onChange={handleUsernameChange} />
-          </label>
+         
           <br/>
-          <label>
             <TextField 
               variant="outlined"
               margin="normal"
@@ -121,12 +121,13 @@ function Login() {
               type="password"
               id="password"
               autoComplete="current-password"  value={password} onChange={handlePasswordChange} />
-          </label>
+         
           <br/>
           <Button  type="submit"
               variant="contained"
               color="primary" >Login</Button>
         </form>
+        </Stack>
       )}
     </div>
   );

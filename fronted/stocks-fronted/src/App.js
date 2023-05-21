@@ -9,10 +9,12 @@ function App() {
   return (  
      <Routes>
         <Route path="/" element={<Main />}>
+        <Route/>
         <Route index element={<Login/>} /> 
-        </Route>   
+          
           <Route path="singup/" element={<SignupForm/>}>    
         </Route>
+        </Route> 
       </Routes>
   );
 }
